@@ -1,0 +1,50 @@
+:root {
+  --primary: #2E3037;
+  --secondary: #3F4045;
+  --tertiary: #FCFCFC;
+  --tertiary-dark: #ACACAC;
+  --accent-bright: #749EB3;
+  --accent: #5D737E;
+  --accent-dark: #48575E;
+  --error-bright: #CC7272;
+  --error: #A45C5C;
+  --hover: rgba(255, 255, 255, .1);
+
+  font-family: $font;
+  font-size: 16px;
+}
+
+body {
+  background: var(--primary);
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--tertiary);
+}
+
+h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--tertiary);
+}
+
+a {
+  color: var(--accent-bright);
+  text-decoration: none;
+}
+
+label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--tertiary);
+}
+
+span {
+  display: flex;
+  align-items: center;
+  & * {
+    margin: .25rem;
+  }
+}

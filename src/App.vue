@@ -1,32 +1,27 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+  import IDB from '@/idb.js'
+  
+  export default {
+    async beforeCreate() {
+      const logged_as = localStorage.getItem('logged-as')
+      console.log('Logged as: ' + logged_as);
 
-#nav {
-  padding: 30px;
+      if (!logged_as) this.$router.push('/login')
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+      const user = await IDB.get('users', logged_as)
 
-    &.router-link-exact-active {
-      color: #42b983;
+      if (!user) {
+        this.$router.push('/login')
+      } else {
+        this.$store.commit('login', user)
+        // this.$router.push('/inventories')
+      }
     }
   }
-}
-</style>
+</script>

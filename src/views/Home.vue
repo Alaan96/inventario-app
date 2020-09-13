@@ -1,18 +1,20 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="home">
+    <splash>Inventario</splash>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+  import splash from '@/components/splash.vue'
 
-export default {
-  name: 'Home',
-  components: {
-    HelloWorld
+  export default {
+    components: {
+      splash
+    },
+    mounted() {
+      setTimeout(() => {
+        this.$router.push('/inventories')
+      }, 1500);
+    }
   }
-}
 </script>
