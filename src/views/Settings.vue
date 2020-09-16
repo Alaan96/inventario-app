@@ -76,13 +76,6 @@
         else { return user }
       }
     },
-    mounted() {
-      if (!window.indexedDB) {
-        this.others.offline_mode = false
-      } else {
-        this.others.offline_mode = true
-      }
-    },
     methods: {
       logout() {
         localStorage.removeItem('logged-as')

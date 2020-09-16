@@ -6,6 +6,12 @@ let response = {
   result: null
 }
 
+const enabled = () => {
+  if (!window.indexedDB) return false
+  
+  return true
+}
+
 const connect = (store = null) => {
     return new Promise((resolve, reject) => {
     const request = indexedDB.open(db_name)
@@ -106,6 +112,7 @@ const read = async(store, items) => {
 }
 
 export default {
+  enabled,
   connect,
   add,
   get,

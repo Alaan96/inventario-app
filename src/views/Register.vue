@@ -37,6 +37,9 @@
 
 <script>
   import btn from '@/components/btn.vue'
+  
+  import IDB from '@/idb'
+  import { v4 as uuid } from 'uuid'
 
   export default {
     components: {
@@ -91,6 +94,12 @@
       },
       async register(user) {
         console.log('Enviando formulario...')
+
+        // Crear usuario
+        user.id = uuid()
+        user.sync_code = user.id.slice(-4)
+        user.inventories = []
+        user.offline_mode = IDB.enabled() || false
 
         const registered = await this.$store.dispatch('register', user)
 

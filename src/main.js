@@ -6,21 +6,13 @@ import store from './store'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+import { loadState } from './utils/state'
+
 Vue.config.productionTip = false
 
 Vue.use(VueAxios, axios)
 
-const loadState = async(states, initVue) => {
-  if (states && initVue) {
-
-    // Cargar datos de usuario
-    if (states.includes('user')) await store.dispatch('load_user')
-    
-    initVue
-  }
-}
-
-loadState(['user'],
+loadState(['user', 'settings'],
   new Vue({
     router,
     store,
