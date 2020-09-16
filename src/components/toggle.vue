@@ -1,6 +1,7 @@
 <template>
   <button data-action="toggle">
     <input type="checkbox"
+      :checked="value"
       @change="$emit('input', $event.target.checked)">
     {{ value === true ? text[1] : text[0] }}
   </button>

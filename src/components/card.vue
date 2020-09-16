@@ -1,7 +1,7 @@
 <template>
   <button class="card">
     <header>
-      {{name}}
+      {{title}}
       <arrow></arrow>
     </header>
     <div>
@@ -18,7 +18,7 @@
       'arrow': arrow_icon
     },
     props: {
-      name: {
+      title: {
         type: String,
         required: true
       }

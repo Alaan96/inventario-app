@@ -13,7 +13,11 @@
     },
     mounted() {
       setTimeout(() => {
-        this.$router.push('/inventories')
+        if (!localStorage.getItem('logged-as')) {
+          this.$router.push('/login')
+        } else {
+          this.$router.push('/inventories')
+        }
       }, 1500);
     }
   }

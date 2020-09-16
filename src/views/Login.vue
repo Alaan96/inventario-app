@@ -4,8 +4,8 @@
 
     <section class="users">
       <ingress-card v-for="user in users"
-        :key="user.full_name"
-        :name="user.full_name"
+        :key="user.id"
+        :title="`${user.name} ${user.lastname}`"
         @click.native="login(user)">
       </ingress-card>
     </section>
@@ -33,7 +33,8 @@
     },
     methods: {
       async get_users() {
-        this.users = await IDB.read('users')
+        const response = await IDB.read('users')
+        if (response.success) this.users = response.results
       },
       async login(user) {
         if (user) {

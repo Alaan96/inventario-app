@@ -1,24 +1,29 @@
 const db_name = 'inventario-dev'
 
+let response = {
+  success: false,
+  message: '',
+  result: null
+}
+
 const connect = (store = null) => {
     return new Promise((resolve, reject) => {
     const request = indexedDB.open(db_name)
 
     request.onerror = event => {
-      console.log('IDB: Error al conectar a IndexedDB')
+      console.log('IDB: Error al conectar a IndexedDB.')
       reject(event)
     }
 
     request.onsuccess = event => {
-      console.log('IDB: Conectado a IndexedDB')
+      console.log('IDB: Conectado a IndexedDB.')
       resolve(event.target.result)
     }
 
     request.onupgradeneeded = event => {
-      console.log('IDB: Actualizando IndexedDB')
+      console.log('IDB: Actualizando IndexedDB.')
       const db = event.target.result
-      db.createObjectStore('users', { keyPath: 'full_name' })
-      db.createObjectStore('settings', { keyPath: 'property' })
+      db.createObjectStore('users', { keyPath: 'id' })
     }
   })
 }
@@ -30,22 +35,18 @@ const add = async(store, item) => {
     const transaction = db.transaction(store, 'readwrite')
     transaction.objectStore(store).add(item)
 
-    let response = {
-      success: false,
-      message: '',
-      result: item
-    }
-
     transaction.onerror = event => {
-      console.log('IDB: Error en transacción')
+      // console.log('IDB: Error en transacción')
       response.message = event.target.error.message
+      response.result = item
       reject(response)
     }
 
     transaction.oncomplete = () => {
-      console.log('IDB: Transacción completada')
+      // console.log('IDB: Transacción completada')
       response.success = true
-      response.message = 'Transacción completada'
+      response.message = 'Transacción completada.'
+      response.result = item
       resolve(response)
     }
   })
@@ -58,11 +59,15 @@ const get = async(store, key) => {
     const transaction = db.transaction(store, 'readonly')
     const request = transaction.objectStore(store).get(key)
 
-    request.onerror = event => {
-      reject(event)
+    request.onerror = () => {
+      response.message = 'No se ha podido obtener el registro.'
+      reject(response)
     }
-    request.onsuccess = event => {
-      resolve(request.result)
+    request.onsuccess = () => {
+      response.success = true
+      response.message = 'Registro obtenido con éxito.'
+      response.result = request.result
+      resolve(response)
     }
   })
 }
@@ -86,12 +91,16 @@ const read = async(store, items) => {
       }
     }
 
-    transaction.onerror = event => {
-      reject(event)
+    transaction.onerror = () => {
+      response.message = 'Error al leer los registros.'
+      reject(response)
     }
 
     transaction.oncomplete = () => {
-      resolve(results)
+      response.success = true
+      response.message = 'Registros leídos con éxito.'
+      response.results = results
+      resolve(response)
     }
   })
 }

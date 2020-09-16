@@ -24,7 +24,7 @@
       </section>
       <section>
         <h2>Inventarios</h2>
-        <span class="status empty">- Lista vacía</span>
+        <span class="status empty" v-if="inventories.length === 0">- Lista vacía</span>
       </section>
       <section>
         <h2>Otros</h2>
@@ -33,7 +33,8 @@
             <label for="offline-mode">Modo sin conexión</label>
             <toggle
               :text="['Desactivado', 'Activado']"
-              v-model="others.offline_mode" />
+              v-model="others.offline_mode"
+            />
           </li>
         </ul>
       </section>
@@ -55,19 +56,31 @@
   export default {
     components: {
       btn,
-      'arrow': arrow_icon,
+      arrow: arrow_icon,
       toggle
     },
     data() {
       return {
-        user: {
-          name: 'Alan',
-          lastname: 'Jimenez'
-        },
         inventories: [],
         others: {
           offline_mode: true
         }
+      }
+    },
+    computed: {
+      user() {
+        const user = this.$store.getters.user
+
+        // Error en consola: retorna null al recargar la página
+        if (!user) { return {} } // Solución
+        else { return user }
+      }
+    },
+    mounted() {
+      if (!window.indexedDB) {
+        this.others.offline_mode = false
+      } else {
+        this.others.offline_mode = true
       }
     },
     methods: {
