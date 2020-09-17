@@ -37,7 +37,11 @@
     border-radius: .5rem;
     cursor: pointer;
     &:hover {
-      filter: brightness(1.25);
+      background: var(--accent-bright);
+    }
+    &:focus {
+      outline: none;
+      background: var(--accent-bright);
     }
     & * {
       display: flex;
