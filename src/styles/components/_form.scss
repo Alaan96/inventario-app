@@ -1,8 +1,9 @@
 form {
   padding: 5rem 2rem 0 2rem;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 1rem;
   & legend {
     margin-bottom: 5rem;
     color: var(--tertiary);
@@ -10,7 +11,7 @@ form {
     font-weight: 400;
   }
   & .field {
-    width: 100%;
+    flex: 1 1 auto;
     margin-bottom: 2rem;
   }
   & .go-to {

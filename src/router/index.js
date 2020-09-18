@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Store from '../store'
 
 import Home from '../views/Home.vue'
 import Register from '../views/Register.vue'
@@ -29,6 +28,12 @@ Vue.use(VueRouter)
     path: '/inventories',
     name: 'Inventories',
     component: () => import(/* webpackChunkName: "about" */ '../views/Inventories.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/new-inventory',
+    name: 'New inventory',
+    component: () => import(/* webpackChunkName: "about" */ '../views/New-inventory.vue'),
     meta: { requiresAuth: true }
   },
   {

@@ -1,11 +1,12 @@
 <template>
   <button class="card">
     <header>
-      {{title}}
+      <slot name="title"></slot>
       <arrow></arrow>
     </header>
     <div>
-      0 inventarios
+      <slot name="left"></slot>
+      <slot name="right"></slot>
     </div>
   </button>
 </template>
@@ -16,12 +17,6 @@
   export default {
     components: {
       'arrow': arrow_icon
-    },
-    props: {
-      title: {
-        type: String,
-        required: true
-      }
     }
   }
 </script>

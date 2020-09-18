@@ -30,6 +30,7 @@ const connect = (store = null) => {
       console.log('IDB: Actualizando IndexedDB.')
       const db = event.target.result
       db.createObjectStore('users', { keyPath: 'id' })
+      db.createObjectStore('inventories', { keyPath: 'id' })
     }
   })
 }
@@ -105,7 +106,7 @@ const read = async(store, items) => {
     transaction.oncomplete = () => {
       response.success = true
       response.message = 'Registros leídos con éxito.'
-      response.results = results
+      response.result = results
       resolve(response)
     }
   })

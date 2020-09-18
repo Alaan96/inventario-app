@@ -3,7 +3,7 @@
     <header>
       <h1>Inventarios</h1>
       <div>
-        <btn class="icon accent" @click.native="add_inventory()">
+        <btn class="icon accent" to="/new-inventory">
           <cross-icon></cross-icon>
         </btn>
         <btn class="icon" to="/settings">
@@ -34,6 +34,19 @@
           para crear uno nuevo.
         </span>
       </div>
+      <template v-else>
+        <card v-for="inventory in inventories" :key="inventory.id">
+          <template v-slot:title>
+            <h2>{{inventory.name}}</h2>
+          </template>
+          <template v-slot:left>
+            <span>{{inventory.content.length}}</span>
+          </template>
+          <template v-slot:right>
+            <span>{{inventory.members.length}}</span>
+          </template>
+        </card>
+      </template>
     </main>
   </div>
 </template>
@@ -42,22 +55,27 @@
   import btn from '@/components/btn.vue'
   import cross_icon from '@/components/icons/cross.vue'
   import settings_icon from '@/components/icons/settings.vue'
+  import card from '@/components/card.vue'
 
   export default {
     components: {
       btn,
       'cross-icon': cross_icon,
-      'settings-icon': settings_icon
+      'settings-icon': settings_icon,
+      card
     },
-    data() {
-      return {
-        inventories: []
-      }
-    },
-    methods: {
-      add_inventory() {
-        console.log('Adding inventory...');
+    computed: {
+      inventories() {
+        return this.$store.getters.inventories
       }
     }
   }
 </script>
+
+<style lang="scss" scoped>
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem 0;
+  }
+</style>

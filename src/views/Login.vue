@@ -5,8 +5,13 @@
     <section class="users">
       <ingress-card v-for="user in users"
         :key="user.id"
-        :title="`${user.name} ${user.lastname}`"
         @click.native="login(user)">
+        <template v-slot:title>
+          <h2>{{`${user.name} ${user.lastname}`}}</h2>
+        </template>
+        <template v-slot:left>
+          <span>{{user.inventories.length}}</span>
+        </template>
       </ingress-card>
     </section>
 
@@ -34,7 +39,7 @@
     methods: {
       async get_users() {
         const response = await IDB.read('users')
-        if (response.success) this.users = response.results
+        if (response.success) this.users = response.result
       },
       async login(user) {
         if (user) {

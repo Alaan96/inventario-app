@@ -97,7 +97,7 @@
 
         // Crear usuario
         user.id = uuid()
-        user.sync_code = user.id.slice(-4)
+        user.sync_code = ''
         user.inventories = []
         user.offline_mode = IDB.enabled() || false
 

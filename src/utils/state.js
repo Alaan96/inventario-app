@@ -19,6 +19,7 @@ export const loadState = async (states, initVue) => {
     }
 
     const user = response.result
+    const id = user.id
 
     // Cargar datos de usuario
     if (states.includes('user')) {
@@ -28,6 +29,19 @@ export const loadState = async (states, initVue) => {
     // Cargar configuraciones
     if (states.includes('settings')) {
       store.commit('load_settings', user)
+    }
+
+    // Cargar inventarios
+    if (states.includes('inventories')) {
+      const res = await IDB.read('inventories')
+      const inventories = res.result.filter( inventory => inventory.members.includes(id))
+
+      if (!res.success || inventories.length === 0) {
+        initVue
+        return
+      }
+
+      store.commit('load_inventories', inventories)
     }
 
     initVue
