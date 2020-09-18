@@ -25,6 +25,7 @@
     --btn-fill: var(--accent);
     --btn-text: var(--tertiary);
     --btn-border: none;
+    // flex: 1 1 auto;
     width: 100%;
     height: 3em;
     @include center;

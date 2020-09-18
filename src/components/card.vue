@@ -23,16 +23,18 @@
 
 <style lang="scss" scoped>
   .card {
+    max-width: 25rem;
     width: 100%;
     padding: 1rem;
     font-size: 1rem;
-    color: var(--tertiary);
-    background: var(--accent);
+    font-family: $font;
+    color: var(--tertiary-dark);
+    background: var(--accent-dark);
     border: none;
     border-radius: .5rem;
     cursor: pointer;
     &:hover {
-      background: var(--accent-bright);
+      background: var(--accent);
     }
     &:focus {
       outline: none;
@@ -41,11 +43,14 @@
     & * {
       display: flex;
       justify-content: space-between;
+      align-items: center;
     }
     & header {
-      height: 2em;
+      height: 1.5em;
+      margin-bottom: 1rem;
       font-size: 1.25rem;
       font-weight: 600;
+      color: var(--tertiary);
     }
   }
 </style>

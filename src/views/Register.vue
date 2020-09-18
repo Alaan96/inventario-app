@@ -1,5 +1,6 @@
 <template>
-  <form @keyup="valid_inputs()" @submit.prevent="register(values)">
+  <form class="session"
+    @keyup="valid_inputs()" @submit.prevent="register(values)">
     <legend>Completá estos datos para ingresar</legend>
 
     <div class="field">

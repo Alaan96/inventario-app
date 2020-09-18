@@ -144,9 +144,9 @@
 
 <style lang="scss" scoped>
   .field[data-input="address"] {
-    flex: 1 1 8rem;
+    flex: 3 1 auto;
   }
   .field[data-input="number"] {
-    flex: 0 0 8em;
+    flex: 1 0 8em;
   }
 </style>

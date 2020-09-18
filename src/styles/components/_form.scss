@@ -1,23 +1,33 @@
 form {
-  padding: 5rem 2rem 0 2rem;
+  margin: 1.25rem 2rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 0 1rem;
   & legend {
+    flex: 1 1 100%;
     margin-bottom: 5rem;
-    color: var(--tertiary);
+    text-align: center;
     font-size: 1.5rem;
     font-weight: 400;
+    color: var(--tertiary);
   }
   & .field {
-    flex: 1 1 auto;
+    flex: 0 1 100%;
     margin-bottom: 2rem;
   }
   & .go-to {
     position: absolute;
     bottom: 2rem;
     font-size: 1.25rem;
+  }
+}
+
+form.session {
+  margin: 5rem 2rem;
+  @media screen and (min-width: $tablet) {
+    width: 45rem;
+    margin: 5rem auto;
   }
 }
 

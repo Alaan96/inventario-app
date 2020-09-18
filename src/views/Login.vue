@@ -1,5 +1,6 @@
 <template>
-  <form @submit.prevent>
+  <form class="session"
+    @submit.prevent>
     <legend>Ingresá a tu cuenta con tus datos</legend>
 
     <section class="users">
@@ -7,10 +8,10 @@
         :key="user.id"
         @click.native="login(user)">
         <template v-slot:title>
-          <h2>{{`${user.name} ${user.lastname}`}}</h2>
+          {{`${user.name} ${user.lastname}`}}
         </template>
         <template v-slot:left>
-          <span>{{user.inventories.length}}</span>
+          <span>{{user.inventories.length | format_inventories }}</span>
         </template>
       </ingress-card>
     </section>
@@ -49,6 +50,12 @@
           if (logged) this.$router.push('/inventories')
         }
       }
+    },
+    filters: {
+      format_inventories(amount) {
+        if (amount === 1) return `${amount} inventario`
+        return `${amount} inventarios`
+      }
     }
   }
 </script>
@@ -56,8 +63,9 @@
 <style lang="scss">
   section.users {
     width: 100%;
-    & *:not(:last-child) {
-      margin-bottom: 1rem;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; // No soportado en su totalidad
   }
 </style>

@@ -37,13 +37,13 @@
       <template v-else>
         <card v-for="inventory in inventories" :key="inventory.id">
           <template v-slot:title>
-            <h2>{{inventory.name}}</h2>
+            {{inventory.name}}
           </template>
           <template v-slot:left>
-            <span>{{inventory.content.length}}</span>
+            <span>{{ inventory.content.length | format_products }}</span>
           </template>
           <template v-slot:right>
-            <span>{{inventory.members.length}}</span>
+            <span>{{ inventory.members.length | format_members }}</span>
           </template>
         </card>
       </template>
@@ -67,6 +67,16 @@
     computed: {
       inventories() {
         return this.$store.getters.inventories
+      }
+    },
+    filters: {
+      format_products(amount) {
+        if (amount === 1) return `${amount} producto`
+        return `${amount} productos`
+      },
+      format_members(amount) {
+        if (amount === 1) return `${amount} integrante`
+        return `${amount} integrantes`
       }
     }
   }
