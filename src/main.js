@@ -7,6 +7,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 import { loadState } from './utils/state'
+import './utils/filters'
 
 Vue.config.productionTip = false
 
