@@ -112,10 +112,53 @@ const read = async(store, items) => {
   })
 }
 
+const edit = async(store, key, edits) => {
+  const db = await connect()
+
+  return new Promise((resolve, reject) => {
+    const object_store = db.transaction(store, 'readwrite').objectStore(store)
+    const request = object_store.get(key)
+
+    request.onerror = event => {
+      response.message = event.target.error.message
+      response.result = null
+      reject(response)
+    }
+
+    request.onsuccess = () => {
+      let item = request.result
+
+      Object.keys(edits).forEach( key => {
+        if (item[key] instanceof Array) {
+          item[key].push(edits[key])
+          return
+        }
+        item[key] = edits[key]
+      })
+
+      const update = object_store.put(item)
+
+      update.onerror = event => {
+        response.message = event.target.error.message
+        response.result = item
+        reject(response)
+      }
+
+      update.onsuccess = () => {
+        response.success = true
+        response.message = 'Edición completa.'
+        response.result = item
+        resolve(response)
+      }
+    }
+  })
+}
+
 export default {
   enabled,
   connect,
   add,
   get,
-  read
+  read,
+  edit
 }
