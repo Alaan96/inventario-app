@@ -33,6 +33,14 @@ const actions = {
     localStorage.setItem('logged-as', user.id)
 
     return true
+  },
+  async add_inventory({ state }, inventory_id) {
+    const edits = { inventories: inventory_id }
+
+    // Guardar id del inventario en el usuario
+    const { success } = await IDB.edit('users', state.user.id, edits)
+
+    return success
   }
 }
 

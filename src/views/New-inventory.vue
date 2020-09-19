@@ -136,7 +136,9 @@
         inventory.members = [this.$store.getters.user.id]
 
         const response = await this.$store.dispatch('create_inventory', inventory)
-        if (response) this.$router.push('/inventories')
+        const res = await this.$store.dispatch('add_inventory', inventory.id)
+
+        if (response && res) this.$router.push('/inventories')
       }
     }
   }
