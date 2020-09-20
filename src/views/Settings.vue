@@ -23,10 +23,6 @@
         </ul>
       </section>
       <section>
-        <h2>Inventarios</h2>
-        <span class="status empty" v-if="inventories.length === 0">- Lista vacía</span>
-      </section>
-      <section>
         <h2>Otros</h2>
         <ul>
           <li>
@@ -61,7 +57,6 @@
     },
     data() {
       return {
-        inventories: [],
         others: {
           offline_mode: true
         }
@@ -79,6 +74,7 @@
     methods: {
       logout() {
         localStorage.removeItem('logged-as')
+        this.$store.commit('empty_inventories')
         this.$router.push('login')
       }
     }

@@ -33,15 +33,12 @@ export const loadState = async (states, initVue) => {
 
     // Cargar inventarios
     if (states.includes('inventories')) {
-      const res = await IDB.read('inventories')
-      const inventories = res.result.filter( inventory => inventory.members.includes(id))
+      const inventories_loaded = await store.dispatch('load_inventories', id)
 
-      if (!res.success || inventories.length === 0) {
+      if (!inventories_loaded) {
         initVue
         return
       }
-
-      store.commit('load_inventories', inventories)
     }
 
     initVue

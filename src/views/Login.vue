@@ -4,16 +4,18 @@
     <legend>Ingresá a tu cuenta con tus datos</legend>
 
     <section class="users">
-      <ingress-card v-for="user in users"
+      <card v-for="user in users"
         :key="user.id"
+        to="/inventories"
+        prevent
         @click.native="login(user)">
         <template v-slot:title>
           {{`${user.name} ${user.lastname}`}}
         </template>
         <template v-slot:left>
-          <span>{{user.inventories.length | format_inventories }}</span>
+          <span>{{user.inventories.length | format_plural('inventario') }}</span>
         </template>
-      </ingress-card>
+      </card>
     </section>
 
     <router-link to="/register" class="go-to">No tengo cuenta</router-link>
@@ -27,7 +29,7 @@
 
   export default {
     components: {
-      'ingress-card': card
+      card
     },
     data() {
       return {
@@ -44,8 +46,10 @@
       },
       async login(user) {
         if (user) {
+          console.log('Iniciando sesión...')
           // Login rápido
           const logged = await this.$store.dispatch('login', user)
+          const load_inventories = await this.$store.dispatch('load_inventories', user.id) 
           
           if (logged) this.$router.push('/inventories')
         }

@@ -37,6 +37,12 @@ Vue.use(VueRouter)
     meta: { requiresAuth: true }
   },
   {
+    path: '/inventories/:id',
+    name: 'Inventory',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Inventory.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/settings',
     name: 'Settings',
     component: Settings,

@@ -1,5 +1,5 @@
 <template>
-  <button class="card">
+  <router-link :to="to" class="card" @click.native="navigate(prevent)">
     <header>
       <slot name="title"></slot>
       <arrow></arrow>
@@ -8,7 +8,7 @@
       <slot name="left"></slot>
       <slot name="right"></slot>
     </div>
-  </button>
+  </router-link>
 </template>
 
 <script>
@@ -16,7 +16,16 @@
 
   export default {
     components: {
-      'arrow': arrow_icon
+      arrow: arrow_icon
+    },
+    props: {
+      to: String,
+      prevent: Boolean
+    },
+    methods: {
+      navigate(prevent) {
+        if (prevent) event.preventDefault()
+      }
     }
   }
 </script>
@@ -33,13 +42,6 @@
     border: none;
     border-radius: .5rem;
     cursor: pointer;
-    &:hover {
-      background: var(--accent);
-    }
-    &:focus {
-      outline: none;
-      background: var(--accent-bright);
-    }
     & * {
       display: flex;
       justify-content: space-between;
@@ -52,5 +54,10 @@
       font-weight: 600;
       color: var(--tertiary);
     }
+  }
+
+  .card:hover, .card:focus {
+    background: var(--accent);
+    color: var(--tertiary);
   }
 </style>

@@ -10,6 +10,9 @@ const mutations = {
   },
   load_inventories(state, inventories) {
     if (inventories) state.inventories = inventories
+  },
+  empty_inventories(state) {
+    state.inventories = []
   }
 }
 
@@ -26,6 +29,18 @@ const actions = {
     if (data.success) context.commit('add_inventory', inventory)
 
     return data.success
+  },
+  async load_inventories({ commit }, id) {
+    const conditions = {
+      members: id
+    }
+
+    const res = await IDB.find('inventories', conditions)
+    const inventories = res.result
+
+    commit('load_inventories', inventories)
+
+    return res.success
   }
 }
 

@@ -30,7 +30,7 @@ const actions = {
   },
   async login(context, user) {
     context.commit('login', user)
-    localStorage.setItem('logged-as', user.id)
+    if (!localStorage.getItem('logged-as')) localStorage.setItem('logged-as', user.id)
 
     return true
   },
