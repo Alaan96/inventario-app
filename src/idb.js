@@ -79,7 +79,7 @@ const get = async(store, key) => {
   })
 }
 
-const read = async(store, items) => {
+const read = async(store) => {
   const db = await connect()
 
   return new Promise((resolve, reject) => {
@@ -94,7 +94,52 @@ const read = async(store, items) => {
         results.push(cursor.value)
         cursor.continue()
       } else {
-        console.log('No hay más registros.')
+        // console.log('No hay más registros.')
+      }
+    }
+
+    transaction.onerror = () => {
+      response.message = 'Error al leer los registros.'
+      reject(response)
+    }
+
+    transaction.oncomplete = () => {
+      response.success = true
+      response.message = 'Registros leídos con éxito.'
+      response.result = results
+      resolve(response)
+    }
+  })
+}
+
+const find = async (store, conditions = null) => {
+  const db = await connect()
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(store, 'readonly')
+    const object_store = transaction.objectStore(store)
+    let results = []
+
+    object_store.openCursor().onsuccess = event => {
+      const cursor = event.target.result
+      let add = false
+      
+      if (cursor) {
+        const value = cursor.value
+
+        Object.keys(conditions).forEach( key => {
+          if (value[key] instanceof Array) {
+            add = value[key].includes(conditions[key])
+            return
+          }
+
+          add = value[key] == conditions[key]
+        })
+
+        if (add) results.push(value)
+        cursor.continue()
+      } else {
+        // console.log('No hay más registros.')
       }
     }
 
@@ -160,5 +205,6 @@ export default {
   add,
   get,
   read,
+  find,
   edit
 }
