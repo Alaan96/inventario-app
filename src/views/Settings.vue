@@ -1,13 +1,8 @@
 <template>
   <div class="layout">
-    <header>
-      <div>
-        <btn class="icon" to="/inventories">
-          <arrow direction="left"></arrow>
-        </btn>
-        <h1>Configuración</h1>
-      </div>
-    </header>
+    <header-area back="/inventories">
+      <h1>Configuración</h1>
+    </header-area>
     <main>
       <section>
         <h2>Datos de usuario</h2>
@@ -45,14 +40,14 @@
 </template>
 
 <script>
+  import header from '@/components/header.vue'
   import btn from '@/components/btn.vue'
-  import arrow_icon from '@/components/icons/arrow.vue'
   import toggle from '@/components/toggle.vue'
 
   export default {
     components: {
+      'header-area': header,
       btn,
-      arrow: arrow_icon,
       toggle
     },
     data() {

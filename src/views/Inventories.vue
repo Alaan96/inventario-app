@@ -1,16 +1,14 @@
 <template>
   <div class="layout">
-    <header>
+    <header-area>
       <h1>Inventarios</h1>
-      <div>
-        <btn class="icon accent" to="/new-inventory">
-          <cross-icon></cross-icon>
-        </btn>
-        <btn class="icon" to="/settings">
-          <settings-icon></settings-icon>
-        </btn>
-      </div>
-    </header>
+      <btn class="icon accent" to="/new-inventory">
+        <cross-icon></cross-icon>
+      </btn>
+      <btn class="icon" to="/settings">
+        <settings-icon></settings-icon>
+      </btn>
+    </header-area>
     <main>
       <div class="empty-list" v-if="inventories.length === 0">
         <svg id="illustration" xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
@@ -53,6 +51,7 @@
 </template>
 
 <script>
+  import header from '@/components/header.vue'
   import btn from '@/components/btn.vue'
   import cross_icon from '@/components/icons/cross.vue'
   import settings_icon from '@/components/icons/settings.vue'
@@ -60,6 +59,7 @@
 
   export default {
     components: {
+      'header-area': header,
       btn,
       'cross-icon': cross_icon,
       'settings-icon': settings_icon,

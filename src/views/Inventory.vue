@@ -1,22 +1,17 @@
 <template>
   <div class="layout">
-    <header>
-      <div>
-        <btn class="icon" to="/inventories">
-          <arrow direction="left"></arrow>
-        </btn>
-        <h1>{{inventory.name}}</h1>
-      </div>
-      <div>
-        <btn class="icon accent" to="/new-product">
-          <cross-icon></cross-icon>
-        </btn>
-        <btn class="icon" to="/settings">
-          <settings-icon></settings-icon>
-        </btn>
-      </div>
-    </header>
-    <main>
+    <header-area back="/inventories">
+      <h1>{{title}}</h1>
+      <btn class="icon accent" v-if="!edit" to="/new-product">
+        <cross-icon></cross-icon>
+      </btn>
+      <btn class="icon" @click.native="edit = !edit">
+        <edit-icon></edit-icon>
+      </btn>
+    </header-area>
+
+    <!-- View -->
+    <main v-if="edit === false">
       <div class="empty-list" v-if="inventory.content.length === 0">
         <svg id="illustration" xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
           <g fill="none" stroke="#acacac" stroke-width="2">
@@ -40,27 +35,42 @@
         </span>
       </div>
     </main>
+
+    <!-- Edit -->
+    <main v-else>
+      
+    </main>
   </div>
 </template>
 
 <script>
+  import header from '@/components/header.vue'
   import btn from '@/components/btn.vue'
-  import arrow_icon from '@/components/icons/arrow.vue'
   import cross_icon from '@/components/icons/cross.vue'
-  import settings_icon from '@/components/icons/settings.vue'
+  import edit_icon from '@/components/icons/edit.vue'
   import card from '@/components/card.vue'
 
   export default {
     components: {
+      'header-area': header,
       btn,
-      arrow: arrow_icon,
       'cross-icon': cross_icon,
-      'settings-icon': settings_icon,
+      'edit-icon': edit_icon,
       card
     },
     data() {
       return {
-        inventory: {}
+        inventory: {},
+        edit: false
+      }
+    },
+    computed: {
+      title() {
+        if (this.edit === false) {
+          return this.inventory.name
+        } else {
+          return 'Editar inventario'
+        }
       }
     },
     beforeMount() {

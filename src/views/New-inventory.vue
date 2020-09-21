@@ -1,13 +1,8 @@
 <template>
   <div class="layout">
-    <header>
-      <div>
-        <btn class="icon" to="/inventories">
-          <arrow direction="left"></arrow>
-        </btn>
-        <h1>Nuevo inventario</h1>
-      </div>
-    </header>
+    <header-area back="/inventories">
+      <h1>Nuevo inventario</h1>
+    </header-area>
     <form @keyup="valid_inputs()" @submit.prevent="create_inventory(inventory)">
       <div class="field">
         <label for="inventory-name">Nombre</label>
@@ -69,15 +64,15 @@
 </template>
 
 <script>
+  import header from '@/components/header.vue'
   import btn from '@/components/btn.vue'
-  import arrow_icon from '@/components/icons/arrow.vue'
 
   import { v4 as uuid } from 'uuid'
 
   export default {
     components: {
-      btn,
-      arrow: arrow_icon,
+      'header-area': header,
+      btn
     },
     data() {
       return {

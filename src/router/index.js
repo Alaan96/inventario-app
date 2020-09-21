@@ -27,19 +27,19 @@ Vue.use(VueRouter)
   {
     path: '/inventories',
     name: 'Inventories',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Inventories.vue'),
+    component: () => import('../views/Inventories.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/new-inventory',
     name: 'New inventory',
-    component: () => import(/* webpackChunkName: "about" */ '../views/New-inventory.vue'),
+    component: () => import('../views/New-inventory.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/inventories/:id',
     name: 'Inventory',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Inventory.vue'),
+    component: () => import('../views/Inventory.vue'),
     meta: { requiresAuth: true }
   },
   {

@@ -5,21 +5,6 @@
   flex-direction: column;
 }
 
-.layout > header {
-  width: 100%;
-  flex: 0 1 5rem;
-  padding: 0 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--accent);
-  & div {
-    display: flex;
-    align-items: center;
-    gap: .5rem; // No soportado totalmente
-  }
-}
-
 main {
   width: 100%;
   padding: 1.25rem 1rem;
