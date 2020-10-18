@@ -11,8 +11,21 @@ const mutations = {
   load_inventories(state, inventories) {
     if (inventories) state.inventories = inventories
   },
+  edit_inventory(state, editions) {
+    if (editions) {
+      const index = state.inventories.findIndex( inventory => inventory.id === editions.id)
+
+      // Guardar ediciones una a una
+      state.inventories[index] = editions
+    }
+  },
   empty_inventories(state) {
     state.inventories = []
+  },
+  remove_inventory(state, id) {
+    const index = state.inventories.findIndex(inventory => inventory.id === id)
+
+    state.inventories.splice(index, 1)
   }
 }
 
@@ -41,6 +54,22 @@ const actions = {
     commit('load_inventories', inventories)
 
     return res.success
+  },
+  async edit_inventory({ commit }, inventory) {
+    // Editar inventario en local
+    const { success } = await IDB.edit('inventories', inventory.id, inventory)
+
+    if (success) commit('edit_inventory', inventory)
+
+    return success
+  },
+  async leave({ commit }, id) {
+    // Borrar el inventario en local
+    const { success } = await IDB.remove('inventories', id)
+
+    if (success) commit('remove_inventory', id)
+
+    return success
   }
 }
 

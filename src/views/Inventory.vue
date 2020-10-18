@@ -1,5 +1,5 @@
 <template>
-  <div class="layout">
+  <div class="layout" v-if="inventory">
     <header-area back="/inventories">
       <h1>{{title}}</h1>
       <btn class="icon accent" v-if="!edit" to="/new-product">
@@ -37,8 +37,11 @@
     </main>
 
     <!-- Edit -->
-    <main v-else>
-      
+    <main v-else data-context="edit">
+      <edit-form :data="inventory"
+        @submit="save_changes(inventory)"
+        @leave="leave(inventory.id)"
+      />
     </main>
   </div>
 </template>
@@ -48,6 +51,7 @@
   import btn from '@/components/btn.vue'
   import cross_icon from '@/components/icons/cross.vue'
   import edit_icon from '@/components/icons/edit.vue'
+  import form from '@/components/inventory-form.vue'
   import card from '@/components/card.vue'
 
   export default {
@@ -56,15 +60,18 @@
       btn,
       'cross-icon': cross_icon,
       'edit-icon': edit_icon,
+      'edit-form': form,
       card
     },
     data() {
       return {
-        inventory: {},
         edit: false
       }
     },
     computed: {
+      inventory() {
+        return this.get_inventory(this.$route.params.id)
+      },
       title() {
         if (this.edit === false) {
           return this.inventory.name
@@ -73,18 +80,28 @@
         }
       }
     },
-    beforeMount() {
-      this.inventory = this.get_inventory(this.$route.params.id)
-    },
     methods: {
       get_inventory(id) {
         return this.$store.getters.inventories
                 .find( inventory => inventory.id === id)
+      },
+      async save_changes(inventory) {
+        const res = await this.$store.dispatch('edit_inventory', inventory)
+
+        if (res) this.edit = false
+      },
+      async leave(id) {
+        const inventory_res = await this.$store.dispatch('leave', id)
+        const user_res = await this.$store.dispatch('leave_inventory', id)
+
+        if (inventory_res && user_res) this.$router.push('/inventories')
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
-
+  main[data-context="edit"] {
+    background: var(--primary);
+  } 
 </style>
