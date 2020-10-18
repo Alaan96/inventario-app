@@ -171,30 +171,41 @@ const edit = async(store, key, edits) => {
     }
 
     request.onsuccess = () => {
-      let item = request.result
-
-      Object.keys(edits).forEach( key => {
-        if (item[key] instanceof Array) {
-          item[key].push(edits[key])
-          return
-        }
-        item[key] = edits[key]
-      })
-
-      const update = object_store.put(item)
+      const update = object_store.put(edits)
 
       update.onerror = event => {
         response.message = event.target.error.message
-        response.result = item
+        response.result = edits
         reject(response)
       }
 
       update.onsuccess = () => {
         response.success = true
         response.message = 'Edición completa.'
-        response.result = item
+        response.result = edits
         resolve(response)
       }
+    }
+  })
+}
+
+const remove = async(store, key) => {
+  const db = await connect()
+
+  return new Promise((resolve, reject) => {
+    const request = db.transaction([store], 'readwrite').objectStore(store).delete(key)
+    console.log(request)
+
+    request.onerror = event => {
+      response.message = event.target.error.message
+      reject(response)
+    }
+
+    request.onsuccess = event => {
+      // console.log('IDB: Transacción completada')
+      response.success = true
+      response.message = 'Elemento eliminado correctamente.'
+      resolve(response)
     }
   })
 }
@@ -206,5 +217,6 @@ export default {
   get,
   read,
   find,
-  edit
+  edit,
+  remove
 }
