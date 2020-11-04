@@ -5,6 +5,8 @@ import Home from '../views/Home.vue'
 import Register from '../views/Register.vue'
 import Login from '../views/Login.vue'
 import Settings from '../views/Settings.vue'
+import NewInventory from '../views/New-inventory.vue'
+import NewProduct from '../views/New-product.vue'
 
 Vue.use(VueRouter)
 
@@ -33,11 +35,11 @@ Vue.use(VueRouter)
   {
     path: '/new-inventory',
     name: 'New inventory',
-    component: () => import('../views/New-inventory.vue'),
+    component: NewInventory,
     meta: { requiresAuth: true }
   },
   {
-    path: '/inventories/:id',
+    path: '/inventory/:id',
     name: 'Inventory',
     component: () => import('../views/Inventory.vue'),
     meta: { requiresAuth: true }
@@ -46,6 +48,11 @@ Vue.use(VueRouter)
     path: '/settings',
     name: 'Settings',
     component: Settings,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/new-product/:id',
+    component: NewProduct,
     meta: { requiresAuth: true }
   }
 ]

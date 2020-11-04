@@ -11,14 +11,15 @@ export const loadState = async (states, initVue) => {
     }
 
     // Obtener usuario en local
-    const response = await IDB.get('users', logged_as)
+    const { success, result } = await IDB.get('users', logged_as)
 
-    if (!response.success) {
+    if (!success || !result) {
+      console.log('Iniciando sin cargar estado.')
+      localStorage.removeItem('logged-as')
       initVue
       return
     }
-
-    const user = response.result
+    const user = result
     const id = user.id
 
     // Cargar datos de usuario
@@ -36,6 +37,16 @@ export const loadState = async (states, initVue) => {
       const inventories_loaded = await store.dispatch('load_inventories', id)
 
       if (!inventories_loaded) {
+        initVue
+        return
+      }
+    }
+
+    // Cargar productos
+    if (states.includes('products')) {
+      const products_loaded = await store.dispatch('load_products')
+
+      if (!products_loaded) {
         initVue
         return
       }

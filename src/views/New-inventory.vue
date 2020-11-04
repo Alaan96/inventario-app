@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <header-area back="/inventories">
+    <header-area back>
       <h1>Nuevo inventario</h1>
     </header-area>
     <inventory-form @submit="create_inventory"/>

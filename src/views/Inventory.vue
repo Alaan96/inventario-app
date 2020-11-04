@@ -1,18 +1,23 @@
 <template>
   <div class="layout" v-if="inventory">
-    <header-area back="/inventories">
-      <h1>{{title}}</h1>
-      <btn class="icon accent" v-if="!edit" to="/new-product">
+    <header-area back>
+      <h1>{{edit ? 'Editar inventario' : inventory.name}}</h1>
+      <btn 
+        v-if="!edit"
+        class="icon accent"
+        :to="`/new-product/${$route.params.id}`">
         <cross-icon></cross-icon>
       </btn>
-      <btn class="icon" @click.native="edit = !edit">
+      <btn class="icon"
+        :pressed="edit"
+        @click.native="edit = !edit">
         <edit-icon></edit-icon>
       </btn>
     </header-area>
 
     <!-- View -->
-    <main v-if="edit === false">
-      <div class="empty-list" v-if="inventory.content.length === 0">
+    <main v-if="!edit">
+      <div class="empty-list" v-if="$store.state.products.list.length === 0">
         <svg id="illustration" xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
           <g fill="none" stroke="#acacac" stroke-width="2">
             <rect width="160" height="160" rx="8" stroke="none"/>
@@ -34,12 +39,13 @@
           para crear uno nuevo.
         </span>
       </div>
+      <Product-list v-else />
     </main>
 
     <!-- Edit -->
     <main v-else data-context="edit">
       <edit-form :data="inventory"
-        @submit="save_changes(inventory)"
+        @submit="save_changes($event)"
         @leave="leave(inventory.id)"
       />
     </main>
@@ -53,6 +59,7 @@
   import edit_icon from '@/components/icons/edit.vue'
   import form from '@/components/inventory-form.vue'
   import card from '@/components/card.vue'
+  import product_list from '@/components/product/list.vue'
 
   export default {
     components: {
@@ -61,24 +68,18 @@
       'cross-icon': cross_icon,
       'edit-icon': edit_icon,
       'edit-form': form,
-      card
+      card,
+      'Product-list': product_list,
     },
     data() {
       return {
-        edit: false
+        edit: false,
       }
     },
     computed: {
       inventory() {
         return this.get_inventory(this.$route.params.id)
       },
-      title() {
-        if (this.edit === false) {
-          return this.inventory.name
-        } else {
-          return 'Editar inventario'
-        }
-      }
     },
     methods: {
       get_inventory(id) {
@@ -101,7 +102,10 @@
 </script>
 
 <style lang="scss" scoped>
-  main[data-context="edit"] {
-    background: var(--primary);
-  } 
+  main {
+    padding: 0;
+    &[data-context="edit"] {
+      background: var(--primary);
+    }
+  }
 </style>

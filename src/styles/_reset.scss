@@ -18,3 +18,10 @@ ul {
 li {
   list-style: none;
 }
+
+button {
+  border: none;
+  &:focus {
+    outline: none;
+  }
+}

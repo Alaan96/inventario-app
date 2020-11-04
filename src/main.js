@@ -13,7 +13,7 @@ Vue.config.productionTip = false
 
 Vue.use(VueAxios, axios)
 
-loadState(['user', 'settings', 'inventories'],
+loadState(['user', 'settings', 'inventories', 'products'],
   new Vue({
     router,
     store,

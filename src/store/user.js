@@ -34,7 +34,7 @@ const actions = {
 
     return true
   },
-  async add_inventory({ state }, inventory_id) { // Se iguala el valor en un array, se deberia pushear
+  async add_inventory({ state }, inventory_id) {
     const { result } = await IDB.get('users', state.user.id)
     let user = result
 

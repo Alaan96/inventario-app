@@ -3,7 +3,7 @@ form {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0 1rem;
+  gap: 2rem 1rem;
   & legend {
     flex: 1 1 100%;
     margin-bottom: 5rem;
@@ -11,10 +11,6 @@ form {
     font-size: 1.5rem;
     font-weight: 400;
     color: var(--tertiary);
-  }
-  & .field {
-    flex: 0 1 100%;
-    margin-bottom: 2rem;
   }
   & .go-to {
     position: absolute;
@@ -31,7 +27,22 @@ form.session {
   }
 }
 
-input[type="text"] {
+.field {
+  width: 100%;
+  flex: 0 1 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  position: relative;
+  & label {
+    flex: 0 0 auto;
+  }
+  & .status {
+    flex: 0 1 7rem;
+  }
+}
+input {
+  flex: 1 0 100%;
   padding: .75em 1em;
   font-size: 1rem;
   color: var(--tertiary);
@@ -39,26 +50,20 @@ input[type="text"] {
   border: none;
   border-radius: .25rem;
   caret-color: var(--tertiary);
-  &:focus {
-    outline: none;
-  }
   &:read-only {
     color: var(--tertiary-dark);
   }
 }
 
-form input {
-  width: 100%;
+input {
   margin-top: .5rem;
   &:focus {
     outline: none;
-    filter: brightness(1.25);
+    background: var(--secondary-bright);
   }
-
   &::placeholder {
     font-size: var(--tertiary-dark);
   }
-
   &:not(:placeholder-shown):invalid {
     background: var(--error);
   }

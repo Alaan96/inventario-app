@@ -1,7 +1,7 @@
 import IDB from '@/idb'
 
 const state = () => ({
-  inventories: []
+  inventories: [],
 })
 
 const mutations = {
@@ -26,7 +26,7 @@ const mutations = {
     const index = state.inventories.findIndex(inventory => inventory.id === id)
 
     state.inventories.splice(index, 1)
-  }
+  },
 }
 
 const getters = {
@@ -70,7 +70,7 @@ const actions = {
     if (success) commit('remove_inventory', id)
 
     return success
-  }
+  },
 }
 
 export default {

@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <header-area back="/inventories">
+    <header-area back>
       <h1>Configuración</h1>
     </header-area>
     <main>

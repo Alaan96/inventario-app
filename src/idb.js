@@ -31,6 +31,7 @@ const connect = (store = null) => {
       const db = event.target.result
       db.createObjectStore('users', { keyPath: 'id' })
       db.createObjectStore('inventories', { keyPath: 'id' })
+      db.createObjectStore('products', { keyPath: 'id' })
     }
   })
 }
@@ -194,7 +195,6 @@ const remove = async(store, key) => {
 
   return new Promise((resolve, reject) => {
     const request = db.transaction([store], 'readwrite').objectStore(store).delete(key)
-    console.log(request)
 
     request.onerror = event => {
       response.message = event.target.error.message

@@ -1,7 +1,8 @@
 <template>
   <button v-bind="$attrs"
     :disabled="disabled"
-    :class="{danger, ghost, icon}">
+    :class="{danger, ghost, icon, pressed}"
+    @click="goBack()">
     <router-link v-if="to" :to="to"></router-link>
     <slot></slot>
   </button>
@@ -13,9 +14,16 @@
     props: {
       disabled: Boolean,
       to: String,
+      back: Boolean,
       icon: Boolean,
       danger: Boolean,
-      ghost: Boolean
+      ghost: Boolean,
+      pressed: Boolean,
+    },
+    methods: {
+      goBack() {
+        if (this.back) this.$router.go(-1)
+      }
     }
   }
 </script>
@@ -38,10 +46,10 @@
     border-radius: .25rem;
     cursor: pointer;
     &:hover, &:focus {
-      filter: brightness(1.15);
+      --btn-fill: var(--accent-bright);
     }
     &:active {
-      filter: brightness(1.4);
+      box-shadow: 0 0 .5rem var(--btn-fill);
     }
     &:focus {
       outline: none;
@@ -72,8 +80,18 @@
     width: 2.5rem;
     height: 2.5rem;
     border-radius: 100%;
-    &:hover {
+    &:hover, &:focus {
       --btn-fill: var(--hover);
+    }
+  }
+  button.icon.pressed {
+    --btn-fill: var(--tertiary-dark);
+    --btn-text: var(--primary);
+    & svg {
+      fill: var(--accent-dark);
+    }
+    &:hover, &:focus {
+      --btn-fill: var(--tertiary);
     }
   }
 

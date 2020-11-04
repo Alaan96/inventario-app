@@ -1,6 +1,9 @@
 <template>
   <header>
-    <btn class="icon" v-if="back" :to="back">
+    <btn
+      v-if="back"
+      :back="back"
+      class="icon">
       <arrow direction="left"></arrow>
     </btn>
     <slot></slot>
@@ -17,7 +20,7 @@
       arrow: arrow_icon,
     },
     props: {
-      back: String
+      back: Boolean
     }
   }
 </script>

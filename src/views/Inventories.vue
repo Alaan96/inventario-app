@@ -33,10 +33,11 @@
         </span>
       </div>
       <template v-else>
-        <card v-for="inventory in inventories" :key="inventory.id"
-          :to="'/inventories/' + inventory.id">
+        <card v-for="inventory in inventories"
+          :key="inventory.id"
+          :to="'/inventory/' + inventory.id">
           <template v-slot:title>
-            {{inventory.name}}
+            {{ inventory.name }}
           </template>
           <template v-slot:left>
             <span>{{ inventory.content.length | format_plural('producto') }}</span>
@@ -69,7 +70,7 @@
       inventories() {
         return this.$store.getters.inventories
       }
-    }
+    },
   }
 </script>
 
