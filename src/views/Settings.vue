@@ -21,11 +21,11 @@
         <h2>Otros</h2>
         <ul>
           <li>
-            <label for="offline-mode">Modo sin conexión</label>
+            <label for="offline-mode">Inventario online</label>
             <toggle
               :text="['Desactivado', 'Activado']"
-              v-model="others.offline_mode"
-            />
+              @click.native="confirm_change(online)"
+              v-model="online" />
           </li>
         </ul>
       </section>
@@ -36,6 +36,15 @@
         </btn>
       </section>
     </main>
+    <confirm
+      v-if="show_confirm"
+      @confirm="show_confirm = false, online = true"
+      @cancel="show_confirm = false">
+      ¿Desea activar el inventario online?
+      <template v-slot:description>
+        <p>En caso de no estar conectado a una red <b>Wi-Fi</b> se usarán los <b>datos móviles</b> del dispositivo.</p>
+      </template>
+    </confirm>
   </div>
 </template>
 
@@ -44,17 +53,19 @@
   import btn from '@/components/btn.vue'
   import toggle from '@/components/toggle.vue'
 
+  import confirm from '@/components/confirm.vue'
+
   export default {
     components: {
       'header-area': header,
       btn,
-      toggle
+      toggle,
+      confirm
     },
     data() {
       return {
-        others: {
-          offline_mode: true
-        }
+        show_confirm: false,
+        online: false
       }
     },
     computed: {
@@ -62,15 +73,21 @@
         const user = this.$store.getters.user
 
         // Error en consola: retorna null al recargar la página
-        if (!user) { return {} } // Solución
-        else { return user }
+        if (!user) return {} // Solución
+        return user
       }
     },
     methods: {
+      confirm_change(value) {
+        if (value === false) {
+          event.preventDefault()
+          this.show_confirm = true
+        }
+      },
       logout() {
         localStorage.removeItem('logged-as')
         this.$store.commit('empty_inventories')
-        this.$router.push('login')
+        this.$router.push('/login')
       }
     }
   }
@@ -94,7 +111,7 @@
     }
     & ul {
       margin: .5rem 0;
-      padding: .5rem 1rem;
+      padding: 0 1rem;
       & li {
         height: 3rem;
         display: flex;
@@ -108,7 +125,7 @@
           flex: 1 0 auto;
         }
         & *:nth-child(2) {
-          flex: 0 0 9rem;
+          flex: 0 0 8rem;
         }
       }
     }

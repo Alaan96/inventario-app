@@ -1,35 +1,43 @@
 form {
-  margin: 1.25rem 2rem;
+  padding: 2rem;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem 1rem;
-  & legend {
-    flex: 1 1 100%;
-    margin-bottom: 5rem;
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: var(--tertiary);
-  }
-  & .go-to {
-    position: absolute;
-    bottom: 2rem;
-    font-size: 1.25rem;
-  }
+  align-items: center;
+  gap: 2rem;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  border: none;
+}
+legend {
+  flex: 0 1 auto;
+  margin-bottom: 5rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--tertiary);
+}
+.go-to {
+  font-size: 1.25rem;
 }
 
 form.session {
-  margin: 5rem 2rem;
+  height: 100vh;
+  margin: auto;
+  padding: 5rem 2rem 2.5rem 2rem;
+  justify-content: space-between;
   @media screen and (min-width: $tablet) {
     width: 45rem;
-    margin: 5rem auto;
   }
 }
 
 .field {
   width: 100%;
-  flex: 0 1 100%;
+  flex: auto;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -40,23 +48,20 @@ form.session {
   & .status {
     flex: 0 1 7rem;
   }
+  & input {
+    margin-top: .5rem;
+  }
 }
 input {
   flex: 1 0 100%;
-  padding: .75em 1em;
+  padding: .5em 1em;
   font-size: 1rem;
+  font-family: $font;
   color: var(--tertiary);
   background: var(--secondary);
   border: none;
-  border-radius: .25rem;
+  border-radius: .5rem;
   caret-color: var(--tertiary);
-  &:read-only {
-    color: var(--tertiary-dark);
-  }
-}
-
-input {
-  margin-top: .5rem;
   &:focus {
     outline: none;
     background: var(--secondary-bright);
@@ -66,6 +71,9 @@ input {
   }
   &:not(:placeholder-shown):invalid {
     background: var(--error);
+  }
+  &:read-only {
+    color: var(--tertiary-dark);
   }
 }
 

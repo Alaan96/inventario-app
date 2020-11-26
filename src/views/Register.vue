@@ -1,102 +1,62 @@
 <template>
   <form class="session"
-    @keyup="valid_inputs()" @submit.prevent="register(values)">
-    <legend>Completá estos datos para ingresar</legend>
-
-    <div class="field">
-      <label for="name">Nombre </label>
-      <span class="status" :class="{'invalid': !valid.name}">{{status.name}}</span>
-      <input type="text"
-        id="name"
+    @submit.prevent>
+    <fieldset>
+      <legend>Completá estos datos para registrarte</legend>
+      <field id="name"
         name="name"
-        autocomplete="off"
         placeholder="Tu nombre"
+        required
         pattern="^([A-Za-z ÁáÉéÍíÓóÚúÑñ])+$"
-        spellcheck="false"
-        v-model="values.name">
-    </div>
-    <div class="field">
-      <label for="lastname">Apellido </label>
-      <span class="status" :class="{'invalid': !valid.lastname}">{{status.lastname}}</span>
-      <input type="text"
-        id="lastname"
+        v-model="user.name">
+        Nombre
+      </field>
+      <field id="lastname"
         name="lastname"
-        autocomplete="off"
         placeholder="Tu apellido"
+        required
         pattern="^([A-Za-z ÁáÉéÍíÓóÚúÑñ])+$"
-        spellcheck="false"
-        v-model="values.lastname">
-    </div>
-
-    <btn :disabled="!valid_form">
-      Ingresar
-    </btn>
+        v-model="user.lastname">
+        Apellido
+      </field>
+      <btn type="submit"
+        :disabled="!ready"
+        @click.native="register(user)">
+        Registrarse
+      </btn>
+    </fieldset>
 
     <router-link to="/login" class="go-to">Ya tengo cuenta</router-link>
   </form>
 </template>
 
 <script>
+  import field from '@/components/inputs/field.vue'
   import btn from '@/components/btn.vue'
   
-  import IDB from '@/idb'
+  import formValidation from '@/mixins/form-validation.js'
+  import IDB from '@/idb.js'
   import { v4 as uuid } from 'uuid'
 
   export default {
     components: {
+      field,
       btn
     },
     data() {
       return {
-        values: {
+        user: {
           name: '',
           lastname: ''
         },
-        valid: {
-          name: false,
-          lastname: false
-        },
-        status: {
-          name: '',
-          lastname: ''
-        }
       }
     },
-    computed: {
-      valid_form() {
-        if (this.valid.name && this.valid.lastname) {
-          return true
-        }
-        return false
-      }
-    },
-    mounted() {
-    },
+    mixins: [formValidation],
     methods: {
-      valid_inputs() {
-        const target = event.target
-        if (target.tagName === 'INPUT') {
-          const name = target.name
-          const pattern = new RegExp(target.pattern)
-          const value = target.value
-          const valid = pattern.test(value)
-
-          if (target.value.length >= 2 && valid) {
-            this.valid[name] = true
-            this.status[name] = 'válido'
-          } else if (target.value.length >= 2 && !valid) {
-            this.valid[name] = false
-            this.status[name] = 'inválido'
-          } else if (target.value.length === 0) {
-            this.valid[name] = false
-            this.status[name] = ''
-          }
-        } 
-      },
       async register(user) {
+        if (!this.ready) return
         console.log('Enviando formulario...')
 
-        // Crear usuario
         user.id = uuid()
         user.sync_code = ''
         user.inventories = []

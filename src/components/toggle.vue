@@ -1,5 +1,6 @@
 <template>
-  <button data-action="toggle">
+  <button data-action="toggle"
+    :class="{active: value}">
     <input type="checkbox"
       :checked="value"
       @change="$emit('input', $event.target.checked)">
@@ -22,6 +23,7 @@
     padding: 0 .5rem;
     position: relative;
     font-size: 1rem;
+    font-weight: 600;
     color: var(--tertiary-dark);
     background: transparent;
     border: none;
@@ -37,6 +39,13 @@
       left: 0;
       opacity: 0;
       cursor: pointer;
+    }
+    &.active {
+      color: var(--accent-bright);
+      background: transparent;
+      &:hover {
+        background: var(--accent-dark);
+      }
     }
   }
 </style>

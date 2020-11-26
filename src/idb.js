@@ -1,4 +1,5 @@
 const db_name = 'inventario-dev'
+let idb = null
 
 let response = {
   success: false,
@@ -12,7 +13,9 @@ const enabled = () => {
   return true
 }
 
-const connect = (store = null) => {
+const connect = () => {
+    if (idb) return idb
+
     return new Promise((resolve, reject) => {
     const request = indexedDB.open(db_name)
 
@@ -23,6 +26,7 @@ const connect = (store = null) => {
 
     request.onsuccess = event => {
       console.log('IDB: Conectado a IndexedDB.')
+      idb = event.target.result
       resolve(event.target.result)
     }
 

@@ -3,7 +3,7 @@
     <header-area back>
       <h1>Nuevo inventario</h1>
     </header-area>
-    <inventory-form @submit="create_inventory"/>
+    <inventory-form @submit="create_inventory($event)"/>
   </div>
 </template>
 

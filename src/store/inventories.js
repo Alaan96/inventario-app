@@ -1,36 +1,34 @@
 import IDB from '@/idb'
 
 const state = () => ({
-  inventories: [],
+  list: {},
 })
 
 const mutations = {
   add_inventory(state, inventory) {
-    if (inventory) state.inventories.push(inventory)
+    if (inventory) state.list[inventory.id] = inventory
   },
   load_inventories(state, inventories) {
-    if (inventories) state.inventories = inventories
+    if (inventories) {
+      inventories.forEach(inventory => {
+        state.list[`${inventory.id}`] = inventory
+      })
+    }
   },
-  edit_inventory(state, editions) {
-    if (editions) {
-      const index = state.inventories.findIndex( inventory => inventory.id === editions.id)
-
-      // Guardar ediciones una a una
-      state.inventories[index] = editions
+  edit_inventory(state, editedInventory) {
+    if (editedInventory) {
+      state.inventories[editedInventory.id] = editedInventory
     }
   },
   empty_inventories(state) {
-    state.inventories = []
+    state.list = {}
   },
   remove_inventory(state, id) {
-    const index = state.inventories.findIndex(inventory => inventory.id === id)
-
-    state.inventories.splice(index, 1)
+    delete state.list[id]
   },
 }
 
 const getters = {
-  inventories: (state) => state.inventories
 }
 
 const actions = {

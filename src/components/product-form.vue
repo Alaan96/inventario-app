@@ -1,5 +1,5 @@
 <template>
-  <form @keyup.enter="submit()" @submit.prevent>
+  <form @submit.prevent>
     <field id="product-name"
       name="name"
       placeholder="Nombre del producto"

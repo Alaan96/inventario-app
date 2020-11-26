@@ -10,7 +10,7 @@
       </btn>
     </header-area>
     <main>
-      <div class="empty-list" v-if="inventories.length === 0">
+      <div class="empty-list" v-if="Object.keys(inventories).length === 0">
         <svg id="illustration" xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
           <g fill="none" stroke="#acacac" stroke-width="2">
             <rect width="160" height="160" rx="8" stroke="none"/>
@@ -33,9 +33,9 @@
         </span>
       </div>
       <template v-else>
-        <card v-for="inventory in inventories"
-          :key="inventory.id"
-          :to="'/inventory/' + inventory.id">
+        <card v-for="(inventory, id) in inventories"
+          :key="id"
+          :to="'/inventory/' + id">
           <template v-slot:title>
             {{ inventory.name }}
           </template>
@@ -68,7 +68,7 @@
     },
     computed: {
       inventories() {
-        return this.$store.getters.inventories
+        return this.$store.state.inventories.list
       }
     },
   }

@@ -1,5 +1,6 @@
 <template>
   <button v-bind="$attrs"
+    type="button"
     :disabled="disabled"
     :class="{danger, ghost, icon, pressed}"
     @click="goBack()">
@@ -10,7 +11,6 @@
 
 <script>
   export default {
-    inheritAttrs: false,
     props: {
       disabled: Boolean,
       to: String,
@@ -34,7 +34,7 @@
     --btn-text: var(--tertiary);
     --btn-border: none;
     width: 100%;
-    height: 3em;
+    height: 2.5em;
     @include center;
     position: relative;
     font-size: 1rem;
@@ -43,7 +43,7 @@
     color: var(--btn-text);
     background: var(--btn-fill);
     border: var(--btn-border);
-    border-radius: .25rem;
+    border-radius: .5rem;
     cursor: pointer;
     &:hover, &:focus {
       --btn-fill: var(--accent-bright);
@@ -66,7 +66,10 @@
   }
 
   button.danger {
-    --btn-fill: var(--error-bright);
+    --btn-fill: var(--error);
+    &:hover, &:focus {
+      --btn-fill: var(--error-bright);
+    }
   }
 
   button.danger.ghost {

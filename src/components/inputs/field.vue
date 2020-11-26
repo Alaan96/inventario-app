@@ -45,7 +45,7 @@
       value: {
         type: String,
         required: true,
-      },
+      }
     },
     data() {
       return {

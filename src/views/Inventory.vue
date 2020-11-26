@@ -73,19 +73,14 @@
     },
     data() {
       return {
+        inventory: {},
         edit: false,
       }
     },
-    computed: {
-      inventory() {
-        return this.get_inventory(this.$route.params.id)
-      },
+    mounted() {
+      this.inventory = this.$store.state.inventories.list[this.$route.params.id]
     },
     methods: {
-      get_inventory(id) {
-        return this.$store.getters.inventories
-                .find( inventory => inventory.id === id)
-      },
       async save_changes(inventory) {
         const res = await this.$store.dispatch('edit_inventory', inventory)
 

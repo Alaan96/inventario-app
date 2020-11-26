@@ -1,7 +1,7 @@
 <template>
   <div class="product"
     :class="{selected}"
-    :style="{transform: `translateX(${touches.move}px)`}"
+    :style="{transform: `translate3d(${position}px, 0, 0)`}"
     @touchstart="start_selection()"
     @touchmove="move_product()"
     @touchcancel="leave_selection()"
@@ -30,30 +30,29 @@
     data() {
       return {
         selected: false,
-        touches: {
-          start: 0,
-          move: 0,
-          end: 0,
-        },
+        touch_start: 0,
+        position: 0,
+        start: null,
       }
     },
     methods: {
       start_selection() {
         this.selected = true
-        this.touches.start = event.touches[0].clientX
+        this.touch_start = event.touches[0].clientX
       },
       move_product() {
-        const offset = 60
-        this.touches.end = event.touches[0].clientX
-        this.touches.move = this.touches.end - this.touches.start
+        const touch_end = event.touches[0].clientX
+        requestAnimationFrame(() => {
+          this.position = touch_end - this.touch_start
+        })
       },
       leave_selection() {
         this.selected = false
 
-        if (this.touches.move >= 200 || this.touches.move <= -200) {
+        if (this.position >= 200 || this.position <= -200) {
           this.remove()
         } else {
-          this.touches.move = 0
+          this.position = 0
         }
       },
       remove() {
@@ -76,8 +75,8 @@
     cursor: pointer;
     transition: .4s ease;
     &.selected {
-      color: var(--accent-light);
-      background: var(--tertiary);
+      color: var(--tertiary);
+      background: var(--accent-bright);
       transition: none;
     }
   }

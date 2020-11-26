@@ -1,7 +1,7 @@
 import store from '../store'
 import IDB from '@/idb'
 
-export const loadState = async (states, initVue) => {
+export default async (states, initVue) => {
   if (states && initVue) {
     const logged_as = localStorage.getItem('logged-as')
 
