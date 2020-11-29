@@ -5,11 +5,12 @@
       <slot name="description"></slot>
       <div class="actions">
         <btn @click.native="$emit('confirm')">
-          Activar
+          <slot name="confirm">Aceptar</slot>
         </btn>
         <btn danger
+          v-if="cancel"
           @click.native="$emit('cancel')">
-          Cancelar
+          <slot name="cancel">Cancelar</slot>
         </btn>
       </div>
     </div>
@@ -21,6 +22,12 @@
   export default {
     components: {
       btn
+    },
+    props: {
+      cancel: {
+        type: Boolean,
+        default: true
+      }
     }
   }
 </script>
@@ -37,7 +44,7 @@
     background: rgba(0, 0, 0, .5);
   }
   div[data-modal="confirm"] {
-    max-width: 20rem;
+    max-width: 24rem;
     width: 80%;
     padding: 1rem;
     display: flex;
@@ -56,5 +63,8 @@
     display: flex;
     justify-content: space-around;
     gap: 1rem;
+    & button {
+      max-width: 10rem;
+    }
   }
 </style>

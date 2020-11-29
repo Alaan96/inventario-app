@@ -1,25 +1,5 @@
-:root {
-  --primary: #2E3037;
-  --secondary-bright:#4f5056;
-  --secondary: #3F4045;
-  --tertiary: #FCFCFC;
-  --tertiary-dark: #BFBFBF;
-  --accent-bright: #749EB3;
-  --accent: #5D737E;
-  --accent-dark: #48575E;
-  --error-bright: #CC7272;
-  --error: #A45C5C;
-  --hover: rgba(255, 255, 255, .1);
-
-  font-family: $font;
-  font-size: 16px;
-}
-
 body {
-  // max-width: 100vw;
-  // height: 100vh;
   background: var(--primary);
-  // overflow-x: hidden;
 }
 
 h1 {
@@ -37,6 +17,7 @@ h2 {
 a {
   color: var(--accent);
   text-decoration: none;
+  cursor: pointer;
   &:hover {
     color: var(--accent-bright);
   }

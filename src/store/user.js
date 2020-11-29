@@ -1,4 +1,8 @@
-import IDB from '@/idb'
+import axios from '@/axios.js'
+import IDB from '@/idb.js'
+import { v4 as uuid } from 'uuid'
+
+import { User } from '@/api.js'
 
 const state = () => ({
   user: null,
@@ -23,10 +27,7 @@ const getters = {
 
 const actions = {
   async register(context, user) {
-    // Guardando usuario en IndexedDB
-    const { success } = await IDB.add('users', user)
-
-    return success
+    return await User.save(user)
   },
   async login({ commit }, user) {
     commit('login', user)

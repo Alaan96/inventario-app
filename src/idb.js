@@ -40,7 +40,7 @@ const connect = () => {
   })
 }
 
-const add = async(store, item) => {
+const add = async (store, item) => {
   const db = await connect()
 
   return new Promise((resolve, reject) => {
@@ -64,7 +64,7 @@ const add = async(store, item) => {
   })
 }
 
-const get = async(store, key) => {
+const get = async (store, key) => {
   const db = await connect()
 
   return new Promise((resolve, reject) => {
@@ -84,7 +84,7 @@ const get = async(store, key) => {
   })
 }
 
-const read = async(store) => {
+const read = async (store) => {
   const db = await connect()
 
   return new Promise((resolve, reject) => {
@@ -162,7 +162,7 @@ const find = async (store, conditions = null) => {
   })
 }
 
-const edit = async(store, key, edits) => {
+const edit = async (store, key, edits) => {
   const db = await connect()
 
   return new Promise((resolve, reject) => {
@@ -194,7 +194,7 @@ const edit = async(store, key, edits) => {
   })
 }
 
-const remove = async(store, key) => {
+const remove = async (store, key) => {
   const db = await connect()
 
   return new Promise((resolve, reject) => {

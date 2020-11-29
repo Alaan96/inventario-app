@@ -27,21 +27,31 @@
     </fieldset>
 
     <router-link to="/login" class="go-to">Ya tengo cuenta</router-link>
+    <confirm
+      v-if="showModal"
+      :cancel="false"
+      @confirm="$router.push('/login')">
+      {{ response.message }}
+      <template v-slot:description>
+        <span v-if="response.result.sync_code">Tu código de ingreso es: {{ response.result.sync_code }}</span>
+      </template>
+    </confirm>
   </form>
 </template>
 
 <script>
   import field from '@/components/inputs/field.vue'
   import btn from '@/components/btn.vue'
+  import confirm from '@/components/confirm.vue'
   
   import formValidation from '@/mixins/form-validation.js'
   import IDB from '@/idb.js'
-  import { v4 as uuid } from 'uuid'
 
   export default {
     components: {
       field,
-      btn
+      btn,
+      confirm
     },
     data() {
       return {
@@ -49,22 +59,16 @@
           name: '',
           lastname: ''
         },
+        showModal: false,
       }
     },
     mixins: [formValidation],
     methods: {
       async register(user) {
         if (!this.ready) return
-        console.log('Enviando formulario...')
 
-        user.id = uuid()
-        user.sync_code = ''
-        user.inventories = []
-        user.offline_mode = IDB.enabled() || false
-
-        const registered = await this.$store.dispatch('register', user)
-
-        if (registered) this.$router.push('/login')
+        this.response = await this.$store.dispatch('register', user)
+        this.showModal = true
       }
     }
   }

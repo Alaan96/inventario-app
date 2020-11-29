@@ -1,12 +1,12 @@
 import IDB from '@/idb'
 
 const state = () => ({
-  online: IDB.enabled() || false
+  offline: false
 })
 
 const mutations = {
   load_settings(state, data) {
-    if (data) state.online = data.online
+    if (data) state.offline = data.offline
   }
 }
 
