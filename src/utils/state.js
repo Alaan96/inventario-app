@@ -29,7 +29,7 @@ export default async (states, initVue) => {
 
     // Cargar configuraciones
     if (states.includes('settings')) {
-      store.commit('load_settings', user)
+      // store.commit('load_settings', user)
     }
 
     // Cargar inventarios
@@ -44,7 +44,7 @@ export default async (states, initVue) => {
 
     // Cargar productos
     if (states.includes('products')) {
-      const products_loaded = await store.dispatch('load_products')
+      const products_loaded = await store.dispatch('load_all_products', id)
 
       if (!products_loaded) {
         initVue

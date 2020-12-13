@@ -20,16 +20,9 @@
     },
     methods: {
       async create_inventory(inventory) {
-        console.log('Creando inventario...')
+        const { success } = await this.$store.dispatch('create_inventory', inventory)
 
-        inventory.id = uuid()
-        inventory.members = [this.$store.getters.user.id]
-        inventory.content = []
-
-        const response = await this.$store.dispatch('create_inventory', inventory)
-        const res = await this.$store.dispatch('add_inventory', inventory.id)
-
-        if (response && res) this.$router.push('/inventories')
+        if (success) this.$router.push('/inventories')
       }
     }
   }

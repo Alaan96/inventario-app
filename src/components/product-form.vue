@@ -30,6 +30,10 @@
       @click.native="submit()">
       Agregar
     </btn>
+    <btn danger ghost v-if="product_data"
+      @click.native="$emit('remove', product)">
+      Eliminar producto
+    </btn>
   </form>
 </template>
 
@@ -39,12 +43,20 @@
   import fieldDate from '@/components/inputs/field-date.vue'
   import btn from './btn.vue'
 
+  import formValidation from '@/mixins/form-validation.js'
+
   export default {
     components: {
       field,
       fieldAmount,
       fieldDate,
       btn,
+    },
+    props: {
+      product_data: {
+        type: [Object, null],
+        default: null
+      }
     },
     data() {
       return {
@@ -53,20 +65,15 @@
           expiration: '',
           amount: 1,
           brand: '',
-        },
-        fields: this.$children,
+        }
       }
     },
-    computed: {
-      ready() {
-        let valid_fields = []
-        this.fields.forEach(field => {
-          if (field.$options._componentTag == 'field') valid_fields.push(field.valid)
-        })
-        if (valid_fields.every((field) => field === true)) return true
-        return false
+    mounted() {
+      if (this.product_data) {
+        Object.assign(this.product, this.product_data)
       }
     },
+    mixins: [formValidation],
     methods: {
       submit() {
         if (this.ready) this.$emit('submit', this.product)

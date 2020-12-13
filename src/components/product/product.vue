@@ -1,5 +1,6 @@
 <template>
-  <div class="product"
+  <article class="product"
+    @click="$router.push(`/inventory/${$route.params.id}/product/${data.id}`)"
     :class="{selected}"
     :style="{transform: `translate3d(${position}px, 0, 0)`}"
     @touchstart="start_selection()"
@@ -11,7 +12,7 @@
     <!-- <div>{{ data.amount }}</div> -->
     <!-- <div>{{ data.brand }}</div> -->
     <!-- <div>{{ data.price }}</div> -->
-  </div>
+  </article>
 </template>
 
 <script>
@@ -19,12 +20,7 @@
     props: {
       data: {
         type: Object,
-        default: function() {
-          return {
-            name: '',
-            expiration: '',
-          }
-        }
+        default: () => {}
       }
     },
     data() {
@@ -32,7 +28,7 @@
         selected: false,
         touch_start: 0,
         position: 0,
-        start: null,
+        start: null
       }
     },
     methods: {
@@ -56,8 +52,7 @@
         }
       },
       remove() {
-        console.log('Remover producto')
-        this.$store.dispatch('remove_product', this.data.id)
+        this.$store.dispatch('remove_product', this.data)
       },
     },
   }

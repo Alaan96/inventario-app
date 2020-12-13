@@ -9,8 +9,8 @@
         <settings-icon></settings-icon>
       </btn>
     </header-area>
-    <main>
-      <div class="empty-list" v-if="Object.keys(inventories).length === 0">
+    <main class="inventories">
+      <div class="empty-list" v-if="empty_list">
         <svg id="illustration" xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
           <g fill="none" stroke="#acacac" stroke-width="2">
             <rect width="160" height="160" rx="8" stroke="none"/>
@@ -39,9 +39,9 @@
           <template v-slot:title>
             {{ inventory.name }}
           </template>
-          <template v-slot:left>
+          <!-- <template v-slot:left>
             <span>{{ inventory.content.length | format_plural('producto') }}</span>
-          </template>
+          </template> -->
           <template v-slot:right>
             <span>{{ inventory.members.length | format_plural('integrante') }}</span>
           </template>
@@ -66,11 +66,19 @@
       'settings-icon': settings_icon,
       card
     },
-    computed: {
-      inventories() {
-        return this.$store.state.inventories.list
+    data() {
+      return {
+        inventories: {}
       }
     },
+    computed: {
+      empty_list() {
+        return Object.keys(this.inventories).length === 0
+      }
+    },
+    beforeMount() {
+      this.inventories = this.$store.state.inventories.list
+    }
   }
 </script>
 
@@ -79,5 +87,6 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem 0;
+    background: var(--secondary);
   }
 </style>

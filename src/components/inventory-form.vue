@@ -45,6 +45,8 @@
 <script>
   import field from './inputs/field.vue'
   import btn from './btn.vue'
+
+  import formValidation from '@/mixins/form-validation.js'
   
   export default {
     components: {
@@ -61,23 +63,13 @@
           address: '',
           number: '',
           comment: '',
-        },
-        fields: this.$children,
-      }
-    },
-    computed: {
-      ready() {
-        let valid_fields = []
-        this.fields.forEach(field => {
-          if (field.$options._componentTag == 'field') valid_fields.push(field.valid)
-        })
-        if (valid_fields.every((field) => field === true)) return true
-        return false
+        }
       }
     },
     mounted() {
       this.load_data()
     },
+    mixins: [formValidation],
     methods: {
       load_data() {
         if (this.data) Object.assign(this.inventory, this.data)

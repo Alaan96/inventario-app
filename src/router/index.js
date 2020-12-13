@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Home from '../views/Home.vue'
-import Register from '../views/Register.vue'
-import Login from '../views/Login.vue'
-import Settings from '../views/Settings.vue'
-import NewInventory from '../views/New-inventory.vue'
-import NewProduct from '../views/New-product.vue'
+import Home from '@/views/Home.vue'
+import Register from '@/views/Register.vue'
+import Login from '@/views/Login.vue'
+import Settings from '@/views/Settings.vue'
+import NewInventory from '@/views/New-inventory.vue'
+import NewProduct from '@/views/New-product.vue'
 
 Vue.use(VueRouter)
 
@@ -29,7 +29,7 @@ Vue.use(VueRouter)
   {
     path: '/inventories',
     name: 'Inventories',
-    component: () => import('../views/Inventories.vue'),
+    component: () => import('@/views/Inventories.vue'),
     meta: { requiresAuth: true }
   },
   {
@@ -41,7 +41,7 @@ Vue.use(VueRouter)
   {
     path: '/inventory/:id',
     name: 'Inventory',
-    component: () => import('../views/Inventory.vue'),
+    component: () => import('@/views/Inventory.vue'),
     meta: { requiresAuth: true }
   },
   {
@@ -54,7 +54,13 @@ Vue.use(VueRouter)
     path: '/new-product/:id',
     component: NewProduct,
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/inventory/:id/product/:product_id',
+    component: () => import('@/views/Product.vue'),
+    meta: { requiresAuth: true }
   }
+
 ]
 
 const router = new VueRouter({

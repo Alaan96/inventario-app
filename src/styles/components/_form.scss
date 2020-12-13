@@ -64,7 +64,9 @@ input {
   caret-color: var(--tertiary);
   &:focus {
     outline: none;
-    background: var(--secondary-bright);
+    &:not(:read-only) {
+      background: var(--secondary-bright);
+    }
   }
   &::placeholder {
     font-size: var(--tertiary-dark);

@@ -117,7 +117,7 @@ const read = async (store) => {
   })
 }
 
-const find = async (store, conditions = null) => {
+const find = async (store, conditions = {}) => {
   const db = await connect()
 
   return new Promise((resolve, reject) => {
@@ -127,18 +127,18 @@ const find = async (store, conditions = null) => {
 
     object_store.openCursor().onsuccess = event => {
       const cursor = event.target.result
+      const condition_props = Object.keys(conditions)
       let add = false
       
-      if (cursor) {
+      if (cursor && condition_props.length) {
         const value = cursor.value
 
-        Object.keys(conditions).forEach( key => {
-          if (value[key] instanceof Array) {
-            add = value[key].includes(conditions[key])
-            return
+        condition_props.forEach( prop => {
+          if (value[prop] instanceof Array) {
+            add = value[prop].includes(conditions[prop])
+          } else {
+            add = value[prop] == conditions[prop]
           }
-
-          add = value[key] == conditions[key]
         })
 
         if (add) results.push(value)

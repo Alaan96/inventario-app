@@ -21,11 +21,11 @@
         <h2>Otros</h2>
         <ul>
           <li>
-            <label for="offline-mode">Inventario online</label>
+            <label for="offline-mode">Modo offline</label>
             <toggle
               :text="['Desactivado', 'Activado']"
               @click.native="confirm_change(online)"
-              v-model="online" />
+              v-model="offline" />
           </li>
         </ul>
       </section>
@@ -65,7 +65,7 @@
     data() {
       return {
         show_confirm: false,
-        online: false
+        offline: true
       }
     },
     computed: {

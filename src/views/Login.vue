@@ -14,7 +14,7 @@
             {{ `${user.name} ${user.lastname}` }}
           </template>
           <template v-slot:left>
-            <span>{{ user.inventories.length | format_plural('inventario') }}</span>
+            <span>{{ $store.getters.inventories_quantity | format_plural('inventario') }}</span>
           </template>
           <template v-slot:right
             v-if="user.sync_code">
@@ -79,15 +79,16 @@
         fast_login: true
       }
     },
-    beforeMount() {
-      this.get_users()
+    async beforeMount() {
+      const response = await IDB.read('users')
+      if (response.success && response.result.length > 0) {
+        this.users = response.result
+      } else {
+        this.fast_login = false
+      }
     },
     mixins: [formValidation],
     methods: {
-      async get_users() {
-        const response = await IDB.read('users')
-        if (response.success) this.users = response.result
-      },
       async login(data) {
         if (!data) return
         let logged = false

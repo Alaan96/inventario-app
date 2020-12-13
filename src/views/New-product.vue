@@ -20,11 +20,10 @@
     },
     methods: {
       async add_product(product) {
-        product.id = uuid()
         product.inventory = this.$route.params.id
         
-        const res = await this.$store.dispatch('add_product', product)
-        if (res) this.$router.go(-1)
+        const { success } = await this.$store.dispatch('add_product', product)
+        if (success) this.$router.push(`/inventory/${product.inventory}`)
       }
     }
   }

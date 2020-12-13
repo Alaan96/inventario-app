@@ -1,24 +1,24 @@
 import IDB from '@/idb'
 
 const state = () => ({
-  offline: false
+  offline: true
 })
 
 const mutations = {
-  load_settings(state, data) {
-    if (data) state.offline = data.offline
-  }
+  // load_settings(state, data) {
+  //   if (data) state.offline = data.offline
+  // }
 }
 
-const getters = {
-}
+// const getters = {
+// }
 
-const actions = {
-}
+// const actions = {
+// }
 
 export default {
   state,
   mutations,
-  getters,
-  actions
+  // getters,
+  // actions
 }

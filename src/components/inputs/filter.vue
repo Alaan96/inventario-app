@@ -61,6 +61,7 @@
     margin: 0;
     padding: 1.25em 1em;
     border-bottom: 1px solid var(--accent-dark);
+    border-radius: 0;
     &::placeholder {
       color: var(--tertiary-dark);
     }
